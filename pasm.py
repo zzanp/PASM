@@ -93,7 +93,6 @@ def print_exception():
         print 'EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj)
 
 __version__ = "1.0"
-sun = "{}{}o{}{}{}O{}".format(color.BLINK, color.RED, color.END, color.BLINK, color.YELLOW, color.END)
 
 
 print "\n *******      **      ******** ****     ****"
@@ -105,7 +104,7 @@ print "/**      /**//////**       /**/**   /    /**"
 print "/**      /**     /** ******** /**        /**"
 print "//       //      // ////////  //         // \n"
 print "{} PASM assembler ver. {}".format(red("<.>"), __version__)
-print "{} Created by: TheSecondSun {} (thescndsun@gmail.com)".format(red("<.>"), sun)
+print "{} Created by: Wintrmvte "
 print "\n"
 
 class Rasm2:
