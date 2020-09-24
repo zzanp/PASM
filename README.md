@@ -4,9 +4,6 @@
 
 PASM is a simple, multi-purpose assembler and disassembler for Linux. It leverages from Rasm2 functionalities and wraps them into a colorful, user-friendly CLI. Extremely useful during shellcode development and heavy Assembly coding.
 
-<p align="center">
-<img src="screenshot.png" width="836"/>
-</p>
 
 ## Table of Contents
 - [Installation](#installation)
