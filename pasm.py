@@ -103,8 +103,13 @@ print "/**////   **********////////**/**  //*   /**"
 print "/**      /**//////**       /**/**   /    /**"
 print "/**      /**     /** ******** /**        /**"
 print "//       //      // ////////  //         // \n"
+<<<<<<< HEAD
 print " - PASM assembler ver. {}".format(__version__)
 print " - Created by: redcodelabs.io {}".format(red("<*>"), sun)
+=======
+print "{} PASM assembler ver. {}".format(red("<.>"), __version__)
+print "{} Created by: Wintrmvte "
+>>>>>>> e31c817fedd400d00530d0547995428467e2bbb2
 print "\n"
 
 class Rasm2:
