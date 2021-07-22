@@ -104,8 +104,6 @@ print("//       //      // ////////  //         // \n")
 
 print(" - PASM assembler ver. {}".format(__version__))
 print(" - Created by: redcodelabs.io {}".format(red("<*>")))
-print("{} PASM assembler ver. {}".format(red("<.>"), __version__))
-print("{} Created by: Wintrmvte ".format('☼'))
 print("\n")
 
 class Rasm2:
