@@ -1,15 +1,13 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
-from ConfigParser import SafeConfigParser
+from configparser import ConfigParser
 from terminaltables import SingleTable
 from termcolor import colored
 import sys
 import subprocess
 import linecache
-import commands
-import readline 
 
-config_parser = SafeConfigParser()
+config_parser = ConfigParser()
 config_parser.read(__file__.replace('pasm.py', '')+'config.ini')
 
 
@@ -61,27 +59,27 @@ def underline(msg):
 
 def print_error(msg):
         p = '%s %s' % (colored('[X]', 'red'), msg)
-        print p
+        print(p)
 
 def print_good(msg):
         p = '%s %s' % (colored('[+]', 'green'), msg)
-        print p
+        print(p)
 
 def print_underline(msg):
         p = color().UNDERLINE+msg+color().END
-        print p
+        print(p)
 
 def print_wrn(msg):
         p = '%s %s' % (colored('[WARNING]', 'yellow'), msg)
-        print p
+        print(p)
 
 def print_info(msg):
         info = '[INFO]%s' % msg
-        print info
+        print(info)
 
 def print_star(msg, color='magenta'):
         p = '%s%s' %(colored('*', color), msg)
-        print p
+        print(p)
 
 def print_exception():
         exc_type, exc_obj, tb = sys.exc_info()
@@ -90,68 +88,66 @@ def print_exception():
         filename = f.f_code.co_filename
         linecache.checkcache(filename)
         line = linecache.getline(filename, lineno, f.f_globals)
-        print 'EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj)
+        print('EXCEPTION IN ({}, LINE {} "{}"): {}'.format(filename, lineno, line.strip(), exc_obj))
 
 __version__ = "1.0"
 
 
-print "\n *******      **      ******** ****     ****"
-print "/**////**    ****    **////// /**/**   **/**"
-print "/**   /**   **//**  /**       /**//** ** /**"
-print "/*******   **  //** /*********/** //***  /**"
-print "/**////   **********////////**/**  //*   /**"
-print "/**      /**//////**       /**/**   /    /**"
-print "/**      /**     /** ******** /**        /**"
-print "//       //      // ////////  //         // \n"
-<<<<<<< HEAD
-print " - PASM assembler ver. {}".format(__version__)
-print " - Created by: redcodelabs.io {}".format(red("<*>"), sun)
-=======
-print "{} PASM assembler ver. {}".format(red("<.>"), __version__)
-print "{} Created by: Wintrmvte "
->>>>>>> e31c817fedd400d00530d0547995428467e2bbb2
-print "\n"
+print("\n *******      **      ******** ****     ****")
+print("/**////**    ****    **////// /**/**   **/**")
+print("/**   /**   **//**  /**       /**//** ** /**")
+print("/*******   **  //** /*********/** //***  /**")
+print("/**////   **********////////**/**  //*   /**")
+print("/**      /**//////**       /**/**   /    /**")
+print("/**      /**     /** ******** /**        /**")
+print("//       //      // ////////  //         // \n")
+
+print(" - PASM assembler ver. {}".format(__version__))
+print(" - Created by: redcodelabs.io {}".format(red("<*>")))
+print("{} PASM assembler ver. {}".format(red("<.>"), __version__))
+print("{} Created by: Wintrmvte ".format('☼'))
+print("\n")
 
 class Rasm2:
     def __init__(self):
         pass
-        
+
     def raw_asm(self, instr):
         if endian_prompt == 'little':
             self.endian = ''
         else:
             self.endian = '-e'
-        op = commands.getoutput(('rasm2 -s {} -a {} -b {} -k {} {} "{}"'.format(syntax, arch, bits, os, self.endian, instr)))
-        return binascii.unhexlify(op)
+        op = subprocess.check_output(('rasm2 -s {} -a {} -b {} -k {} {} "{}"'.format(syntax, arch, bits, os, self.endian, instr)), shell=True)
+        return binascii.unhexlify(op.decode('utf-8'))
 
     def asm(self, instr):
         if endian_prompt == 'little':
             self.endian = ''
         else:
             self.endian = '-e'
-        op = commands.getoutput(('rasm2 -s {} -a {} -b {} -k {} {} "{}"'.format(syntax, arch, bits, os, self.endian, instr)))
-        return op
+        op = subprocess.check_output(('rasm2 -s {} -a {} -b {} -k {} {} "{}"'.format(syntax, arch, bits, os, self.endian, instr)), shell=True)
+        return op.decode('utf-8')
 
     def disasm(self, opcodes):
         if endian_prompt == 'little':
             self.endian = ''
         else:
             self.endian = '-e'
-        instr = commands.getoutput(('rasm2 -s {} -a {} -b {} -k {} -D {} {}'.format(syntax, arch, bits, os, self.endian, opcodes)))
-        return instr
+        instr = subprocess.check_output(('rasm2 -s {} -a {} -b {} -k {} -D {} {}'.format(syntax, arch, bits, os, self.endian, opcodes)), shell=True)
+        return instr.decode('utf-8')
 
     def raw_disasm(self, opcodes):
         if endian_prompt == 'little':
             self.endian = ''
         else:
             self.endian = '-e'
-        instr = commands.getoutput(('rasm2 -s {} -a {} -b {} -k {} -d {} {}'.format(syntax, arch, bits, os, self.endian, opcodes)))
-        return instr
+        instr = subprocess.check_output(('rasm2 -s {} -a {} -b {} -k {} -d {} {}'.format(syntax, arch, bits, os, self.endian, opcodes)), shell=True)
+        return instr.decode('utf-8')
 
 Rasm2 = Rasm2()
 
-cmds = ["help", "os", "syntax", "arch", 
-        "bits", "asm", "disasm", "c", 
+cmds = ["help", "os", "syntax", "arch",
+        "bits", "asm", "disasm", "c",
         "exit", "endian"]
 
 def main():
@@ -164,14 +160,14 @@ def main():
     cmd_loop = True
     while cmd_loop:
         try:
-            input = raw_input("{}:[{}][{}][{}][{}][{}]\n-➤ ".format(bold(underline(mode)), 
+            raw_input = input("{}:[{}][{}][{}][{}][{}]\n-➤ ".format(bold(underline(mode)),
                 cyan(arch), red(bits), blue(os), green(endian_prompt),magenta(syntax)))
         except KeyboardInterrupt:
-            print "\n"
+            print("\n")
             print_info("Exiting...")
             exit()
-        cmd = input.split()[0]
-        args = input.split()[1::]
+        cmd = raw_input.split()[0]
+        args = raw_input.split()[1::]
         if cmd not in cmds:
             if mode == "asm":
                 line_to_asm = "{} {}".format(cmd, ' '.join(args))
@@ -180,17 +176,17 @@ def main():
                     print_error("Unable to assemble '{}': invalid mnemonic".format(line_to_asm))
                 elif "Warning" in out:
                     print_wrn(' '.join(out.split()[1:-1]))
-                    print '\n'
+                    print('\n')
                 else:
                     nulls = out.count("00")
                     def nsplit(s, n):
-                        return [s[k:k+n] for k in xrange(0, len(s), n)]
+                        return [s[k:k+n] for k in range(0, len(s) - 1, n)]
                     print_good("Length: {} bytes".format(bold(len(out)/2)))
                     if nulls != 0:
                         print_error("Found {} nullbytes".format(red(bold(nulls))))
-                    print "Raw bytes:   {}".format(out.replace('00', red(bold("00"))))
-                    print "Hex escaped: \\x{}".format('\\x'.join(nsplit(out,2)).replace('00', red(bold("00"))))
-                    print '\n'
+                    print("Raw bytes:   {}".format(out.replace('00', red(bold("00")))))
+                    print("Hex escaped: \\x{}".format('\\x'.join(nsplit(out,2)).replace('00', red(bold("00")))))
+                    print('\n')
             elif mode == "disasm":
                 opcodes = "{} {}".format(cmd, ''.join(args))
                 line_to_disasm = opcodes.replace('\\x', '').replace('0x', '').replace(',', '')
@@ -199,23 +195,23 @@ def main():
                     print_error("Unable to disassemble '{}': invalid instruction".format(line_to_disasm))
                 elif "Warning" in out:
                     print_wrn(out.replace("Warning:", ''))
-                    print "\n"
+                    print("\n")
                 else:
                     print_good("Disassembly of '{}':".format(opcodes))
-                    print out
-                    print "\n"
+                    print(out)
+                    print("\n")
         elif cmd == "asm":
             if "-h" in args:
-                    print "\nUSAGE: asm [-h]"
-                    print "DESCRIPTION: Change mode to assembly\n"
+                    print("\nUSAGE: asm [-h]")
+                    print("DESCRIPTION: Change mode to assembly\n")
             else:
                 mode = "asm"
-                print_good("Changed mode to asm\n") 
+                print_good("Changed mode to asm\n")
 
         elif cmd == "disasm":
             if "-h" in args:
-                    print "\nUSAGE: disasm [-h]"
-                    print "DESCRIPTION: Change mode to disassembly\n"
+                    print("\nUSAGE: disasm [-h]")
+                    print("DESCRIPTION: Change mode to disassembly\n")
             else:
                 mode = "disasm"
                 print_good("Changed mode to disasm\n")
@@ -224,8 +220,8 @@ def main():
                 oses = ["linux", "windows", "osx"]
                 new_os = args[0]
                 if "-h" in args:
-                    print "\nUSAGE: os [-h] {linux|windows|osx}"
-                    print "DESCRIPTION: Specify OS to set\n"
+                    print("\nUSAGE: os [-h] {linux|windows|osx}")
+                    print("DESCRIPTION: Specify OS to set\n")
                 else:
                     if new_os not in oses:
                         print_error("No such OS")
@@ -239,8 +235,8 @@ def main():
                 bts = ["16", "32", "64"]
                 new_bits = args[0]
                 if "-h" in args:
-                    print "\nUSAGE: bits [-h] {16|32|64}"
-                    print "DESCRIPTION: Specify number of bits\n"
+                    print("\nUSAGE: bits [-h] {16|32|64}")
+                    print("DESCRIPTION: Specify number of bits\n")
                 else:
                     if new_bits not in bts:
                         print_error("Wrong bits number")
@@ -254,8 +250,8 @@ def main():
                 syntaxes = ["intel", "att"]
                 new_syntax = args[0]
                 if "-h" in args:
-                    print "\nUSAGE: syntax [-h] {intel|att}"
-                    print "DESCRIPTION: Specify the syntax\n"
+                    print("\nUSAGE: syntax [-h] {intel|att}")
+                    print("DESCRIPTION: Specify the syntax\n")
                 else:
                     if new_syntax not in syntaxes:
                         print_error("Wrong syntax")
@@ -268,15 +264,15 @@ def main():
             try:
                 new_arch = args[0]
                 if "-h" in args:
-                    print "\nUSAGE: arch [-h] ARCHITECTURE"
-                    print "DESCRIPTION: Set the architecture. To list available architectures, type 'arch ?'\n"
+                    print("\nUSAGE: arch [-h] ARCHITECTURE")
+                    print("DESCRIPTION: Set the architecture. To list available architectures, type 'arch ?'\n")
                 else:
                     if new_arch == "?":
-                        print '\nMODE  BITS       NAME        LICENSE DESCRIPTION'
-                        print '====  ====       ====        ======= ==========='
-                        print commands.getoutput("rasm2 -L")
+                        print('\nMODE  BITS       NAME        LICENSE DESCRIPTION')
+                        print('====  ====       ====        ======= ===========')
+                        print(subprocess.check_output("rasm2 -L", shell=True).decode('utf-8'))
                     else:
-                        if new_arch not in commands.getoutput("rasm2 -L"):
+                        if new_arch not in subprocess.check_output("rasm2 -L", shell=True).decode('utf-8'):
                             print_error("No such architecture\n")
                         else:
                             arch = new_arch
@@ -288,8 +284,8 @@ def main():
                 endians = ['big', 'little']
                 new_endian = args[0]
                 if "-h" in args:
-                    print "\nUSAGE: endian [-h] {big|little} }"
-                    print "DESCRIPTION: Set the endianess\n"
+                    print("\nUSAGE: endian [-h] {big|little} }")
+                    print("DESCRIPTION: Set the endianess\n")
                 else:
                     if new_endian not in endians:
                         print_error("No such endian\n")
@@ -300,21 +296,21 @@ def main():
                 print_error("Specify the endianess")
         elif cmd == "c":
             if "-h" in args:
-                print "\nUSAGE: c [-h]"
-                print "DESCRIPTION: Clear the screen\n"
+                print("\nUSAGE: c [-h]")
+                print("DESCRIPTION: Clear the screen\n")
             else:
                 subprocess.call("clear")
         elif cmd == "exit":
             if "-h" in args:
-                print "\nUSAGE: exit [-h]"
-                print "DESCRIPTION: Exit the program\n"
+                print("\nUSAGE: exit [-h]")
+                print("DESCRIPTION: Exit the program\n")
             else:
                 cmd_loop = False
                 print_info("Exiting...")
         elif cmd == "help":
             if "-h" in args:
-                print "\nUSAGE: help [-h]"
-                print "DESCRIPTION: Show help message\n"
+                print("\nUSAGE: help [-h]")
+                print("DESCRIPTION: Show help message\n")
             else:
                 table_data = [["--COMMAND--", "--DESCRIPTION--"]]
                 table_data.append(['help', "Show this help message"])
@@ -327,17 +323,14 @@ def main():
                 table_data.append(['endian', "Change the endianess"])
                 table_data.append(['c', "Clear screen"])
                 table_data.append(['exit', "Exit PASM"])
-                table_instance = SingleTable(table_data) 
+                table_instance = SingleTable(table_data)
                 table_instance.inner_heading_row_border = True
                 table_instance.justify_columns = {0: 'left', 1: 'left', 2: 'left'}
-                print table_instance.table
-                print '\n'
+                print(table_instance.table)
+                print('\n')
 
 if __name__ == "__main__":
     try:
         main()
     except:
         print_exception()
-        
-
-

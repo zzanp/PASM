@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/python3
 from setuptools import setup
 from subprocess import call
 
@@ -9,6 +9,5 @@ setup(name='PASM',
       author_email='thescndsun@gmail.com'
      )
 
-call("pip install -r requirements.txt", shell=True)
+call("pip3 install -r requirements.txt", shell=True)
 call("apt-get install radare2", shell=True)
-

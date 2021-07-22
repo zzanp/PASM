@@ -1,4 +1,2 @@
 termcolor
 terminaltables
-readline
-command
