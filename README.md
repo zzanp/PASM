@@ -1,4 +1,4 @@
-# PASM ![Platform](https://img.shields.io/badge/Platform-Linux-green.svg?longCache=true&style=flat-square) ![Language](https://img.shields.io/badge/Python-2.7-blue.svg?longCache=true&style=flat-square)   ![License](https://img.shields.io/badge/License-MIT-red.svg?longCache=true&style=flat-square)
+# PASM ![Platform](https://img.shields.io/badge/Platform-Linux-green.svg?longCache=true&style=flat-square) ![Language](https://img.shields.io/badge/Python-3.7-blue.svg?longCache=true&style=flat-square)   ![License](https://img.shields.io/badge/License-MIT-red.svg?longCache=true&style=flat-square)
 
 
 
@@ -14,11 +14,11 @@ PASM is a simple, multi-purpose assembler and disassembler for Linux. It leverag
 
 ## Installation
 Go to the cloned repository and run `setup.py`:
-`$ python setup.py install`
+`$ python3 setup.py install`
 It will install all needed dependencies.
 **WARNING:** If you have different package manager than *apt-get*, you will have to install *radare2* manually.
 Then launch PASM from your terminal:
-`$ python2.7 pasm.py`
+`$ python3 pasm.py`
 
 ## Features
 - Support for over 40 architectures
